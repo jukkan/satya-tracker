@@ -20,7 +20,7 @@ function App() {
       setError(null);
 
       // In production, this will be served from the same domain
-      const response = await fetch('/satya-tracker/data/stars-analyzed.json');
+      const response = await fetch('/data/stars-analyzed.json');
 
       if (!response.ok) {
         throw new Error('Failed to load stars data');
