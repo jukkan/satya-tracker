@@ -2,35 +2,46 @@ import { useEffect, useState } from 'react';
 import { LatestStar } from './components/LatestStar';
 import { Stats } from './components/Stats';
 import { Timeline } from './components/Timeline';
-import { AnalyzedStar } from './types';
+import { BlogPosts } from './components/BlogPosts';
+import { AnalyzedStar, BlogPost } from './types';
 import './App.css';
 
 function App() {
   const [stars, setStars] = useState<AnalyzedStar[]>([]);
+  const [blogPosts, setBlogPosts] = useState<BlogPost[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    loadStars();
+    loadData();
   }, []);
 
-  async function loadStars() {
+  async function loadData() {
     try {
       setLoading(true);
       setError(null);
 
-      // In production, this will be served from the same domain
-      const response = await fetch('/data/stars-analyzed.json');
+      // Load both stars and blog posts in parallel
+      const [starsResponse, blogResponse] = await Promise.all([
+        fetch('/data/stars-analyzed.json'),
+        fetch('/data/blog-posts.json').catch(() => null),
+      ]);
 
-      if (!response.ok) {
+      if (!starsResponse.ok) {
         throw new Error('Failed to load stars data');
       }
 
-      const data = await response.json();
-      setStars(data);
+      const starsData = await starsResponse.json();
+      setStars(starsData);
+
+      // Blog posts might not exist yet, so handle gracefully
+      if (blogResponse && blogResponse.ok) {
+        const blogData = await blogResponse.json();
+        setBlogPosts(blogData);
+      }
     } catch (err) {
-      console.error('Error loading stars:', err);
-      setError('Failed to load star data. Please try again later.');
+      console.error('Error loading data:', err);
+      setError('Failed to load data. Please try again later.');
     } finally {
       setLoading(false);
     }
@@ -75,6 +86,7 @@ function App() {
       <main className="main-content">
         <LatestStar star={latestStar} />
         <Stats stars={stars} />
+        <BlogPosts posts={blogPosts} />
         <Timeline stars={stars} />
       </main>
 

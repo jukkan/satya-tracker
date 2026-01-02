@@ -10,3 +10,16 @@ export interface AnalyzedStar {
   commentary: string;
   analyzed_at: string;
 }
+
+export interface BlogPost {
+  id: string;
+  title: string;
+  url: string;
+  published_at: string;
+  content?: string;
+  excerpt?: string;
+  summary?: string;
+  ai_analysis?: string;
+  ai_predictions?: string;
+  analyzed_at?: string;
+}
