@@ -136,6 +136,8 @@ async function loadAnalyzedStars(): Promise<AnalyzedStar[]> {
 }
 
 async function saveAnalyzedStars(stars: AnalyzedStar[]): Promise<void> {
+  const dir = path.dirname(DATA_FILE);
+  await fs.mkdir(dir, { recursive: true });
   await fs.writeFile(DATA_FILE, JSON.stringify(stars, null, 2), 'utf-8');
 }
 
