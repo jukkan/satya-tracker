@@ -1,11 +1,15 @@
 # 🎅 Satya Tracker
 
-A satirical "Santa Tracker" style web app that monitors GitHub user [@saztd](https://github.com/saztd) (Satya Nadella's account) for new starred repositories and generates witty AI commentary on what each star reveals about Microsoft's CEO.
+A satirical "Santa Tracker" style web app that monitors GitHub user [@saztd](https://github.com/saztd) (Satya Nadella's account) for new starred repositories and his personal blog at [snscratchpad.com](https://snscratchpad.com), generating witty AI commentary on what his activity reveals about Microsoft's CEO.
 
 ## 🌟 Features
 
 - **Real-time Tracking**: Monitors Satya's GitHub stars every 6 hours via GitHub Actions
-- **AI Commentary**: Uses Anthropic's Claude to generate playful, satirical analysis of each starred repo
+- **Blog Integration**: Tracks and analyzes Satya's personal blog posts from snscratchpad.com
+- **AI Commentary**: Uses Anthropic's Claude to generate playful, satirical analysis of:
+  - Each starred repository
+  - Blog post summaries and predictions
+  - What it all means for Microsoft's strategy
 - **Santa Tracker Aesthetic**: Dark theme with festive animations and a blinking "LIVE" indicator
 - **Statistics Dashboard**:
   - Total stars tracked
@@ -13,6 +17,7 @@ A satirical "Santa Tracker" style web app that monitors GitHub user [@saztd](htt
   - Mood inference based on recent starring patterns
   - Top programming languages
 - **Interactive Timeline**: Card-based view of all starred repos with full AI commentary
+- **Blog Analysis**: AI-powered summaries, witty analysis, and bold predictions for each blog post
 - **Fully Automated**: GitHub Actions handles data fetching, AI generation, and deployment
 
 ## 🚀 Live Demo
@@ -32,20 +37,23 @@ Once deployed, visit: `https://{your-username}.github.io/satya-tracker/`
 ```
 satya-tracker/
 ├── .github/workflows/
-│   ├── fetch-stars.yml       # Cron job to fetch new stars (every 6 hours)
+│   ├── fetch-stars.yml       # Cron job to fetch stars & blog posts (every 6 hours)
 │   └── deploy.yml             # Deploy to GitHub Pages
 ├── scripts/
-│   └── analyze-stars.ts       # Fetch stars + generate AI commentary
+│   ├── analyze-stars.ts       # Fetch stars + generate AI commentary
+│   └── analyze-blog.ts        # Fetch blog posts + generate AI analysis
 ├── public/
 │   └── data/
-│       └── stars-analyzed.json    # Cached stars with AI commentary
+│       ├── stars-analyzed.json    # Cached stars with AI commentary
+│       └── blog-posts.json        # Cached blog posts with AI analysis
 ├── src/
 │   ├── App.tsx                # Main React component
 │   ├── App.css                # Santa Tracker styling
 │   ├── components/
 │   │   ├── LatestStar.tsx     # Hero section with latest star
 │   │   ├── Timeline.tsx       # Card-based timeline of all stars
-│   │   └── Stats.tsx          # Statistics and mood inference
+│   │   ├── Stats.tsx          # Statistics and mood inference
+│   │   └── BlogPosts.tsx      # Blog posts with AI analysis
 │   ├── types.ts               # TypeScript interfaces
 │   ├── main.tsx               # React entry point
 │   └── index.css              # Global styles
@@ -132,6 +140,9 @@ npm run preview
 
 # Run star analysis script manually
 npm run analyze-stars
+
+# Run blog analysis script manually
+npm run analyze-blog
 ```
 
 ## 🤖 How It Works
@@ -140,13 +151,13 @@ npm run analyze-stars
 
 1. **GitHub Actions Cron**: Every 6 hours, `fetch-stars.yml` workflow runs
 2. **Fetch Stars**: Script calls GitHub API to get current starred repos
-3. **Identify New Stars**: Compares with cached `public/data/stars-analyzed.json`
-4. **Generate AI Commentary**: For each new star, calls Anthropic API with:
-   - Repo name and description
-   - Topics and language
-   - Star count
-5. **Update Cache**: Saves analyzed stars back to JSON file
-6. **Commit & Deploy**: If changes detected, commits JSON and triggers deployment
+3. **Fetch Blog Posts**: Script attempts to fetch blog posts from snscratchpad.com (with manual fallback)
+4. **Identify New Content**: Compares with cached data files
+5. **Generate AI Commentary**: For each new item, calls Anthropic API to generate:
+   - **Stars**: Witty satirical commentary on repo choice
+   - **Blog Posts**: Summary, analysis, and bold predictions
+6. **Update Cache**: Saves analyzed data back to JSON files
+7. **Commit & Deploy**: If changes detected, commits JSON and triggers deployment
 
 ### AI Commentary Prompt
 
@@ -222,6 +233,8 @@ All styles are in `src/App.css`. Key CSS variables:
 
 ## 📊 Data Format
 
+### Stars Data
+
 `public/data/stars-analyzed.json` structure:
 
 ```json
@@ -237,6 +250,26 @@ All styles are in `src/App.css`. Key CSS variables:
     "starred_at": "2025-01-01T12:00:00Z",
     "commentary": "AI-generated witty commentary here...",
     "analyzed_at": "2025-01-01T12:05:00Z"
+  }
+]
+```
+
+### Blog Posts Data
+
+`public/data/blog-posts.json` structure:
+
+```json
+[
+  {
+    "id": "post-slug",
+    "title": "Blog Post Title",
+    "url": "https://snscratchpad.com/posts/post-slug/",
+    "published_at": "2025-12-29T00:00:00Z",
+    "excerpt": "Brief excerpt from the post...",
+    "summary": "AI-generated concise summary...",
+    "ai_analysis": "Witty, satirical analysis connecting to Microsoft strategy...",
+    "ai_predictions": "Bold predictions about what this signals...",
+    "analyzed_at": "2025-12-29T12:05:00Z"
   }
 ]
 ```

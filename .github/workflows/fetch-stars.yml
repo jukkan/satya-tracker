@@ -27,24 +27,29 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Run analysis script
+      - name: Run stars analysis script
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: npm run analyze-stars
 
+      - name: Run blog analysis script
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: npm run analyze-blog
+
       - name: Check for changes
         id: git-check
         run: |
-          git diff --exit-code public/data/stars-analyzed.json || echo "changed=true" >> $GITHUB_OUTPUT
+          git diff --exit-code public/data/stars-analyzed.json public/data/blog-posts.json || echo "changed=true" >> $GITHUB_OUTPUT
 
       - name: Commit and push if changed
         if: steps.git-check.outputs.changed == 'true'
         run: |
           git config --global user.name 'Satya Tracker Bot'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-          git add public/data/stars-analyzed.json
-          git commit -m "🎅 Update Satya's stars [$(date +'%Y-%m-%d %H:%M UTC')]"
+          git add public/data/stars-analyzed.json public/data/blog-posts.json
+          git commit -m "🎅 Update Satya's activity [$(date +'%Y-%m-%d %H:%M UTC')]"
           git push
 
       - name: Trigger deployment

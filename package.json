@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "analyze-stars": "tsx scripts/analyze-stars.ts"
+    "analyze-stars": "tsx scripts/analyze-stars.ts",
+    "analyze-blog": "tsx scripts/analyze-blog.ts"
   },
   "dependencies": {
     "react": "^18.3.1",

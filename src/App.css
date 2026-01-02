@@ -540,6 +540,222 @@ body {
   }
 }
 
+/* Blog Section */
+.blog-section {
+  margin: 3rem 0;
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.section-header h2 {
+  font-size: 2rem;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+  margin-bottom: 0.5rem;
+}
+
+.section-header .icon {
+  font-size: 2rem;
+}
+
+.section-subtitle {
+  color: var(--text-secondary);
+  font-size: 1rem;
+}
+
+.section-subtitle a {
+  color: var(--accent-primary);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.section-subtitle a:hover {
+  color: var(--accent-secondary);
+  text-decoration: underline;
+}
+
+.no-data {
+  text-align: center;
+  padding: 3rem;
+  color: var(--text-secondary);
+  background: var(--bg-card);
+  border: 2px dashed var(--border-color);
+  border-radius: 0.8rem;
+}
+
+.blog-featured {
+  margin-bottom: 3rem;
+}
+
+.blog-post-card {
+  background: var(--bg-card);
+  border: 2px solid var(--border-color);
+  border-radius: 0.8rem;
+  padding: 2rem;
+  transition: transform 0.2s, border-color 0.2s, background 0.2s;
+}
+
+.blog-post-card.featured {
+  border-top: 4px solid var(--accent-primary);
+  background: linear-gradient(135deg, var(--bg-card) 0%, rgba(0, 212, 255, 0.05) 100%);
+}
+
+.blog-post-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--accent-primary);
+  background: var(--bg-card-hover);
+}
+
+.blog-post-header {
+  margin-bottom: 1.5rem;
+}
+
+.blog-post-meta {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.blog-badge {
+  display: inline-block;
+  background: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 100%);
+  color: white;
+  padding: 0.4rem 0.8rem;
+  border-radius: 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.blog-date {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.blog-post-title {
+  font-size: 1.8rem;
+  margin: 0;
+  line-height: 1.3;
+}
+
+.blog-post-card.featured .blog-post-title {
+  font-size: 2.2rem;
+}
+
+.blog-post-title a {
+  color: var(--text-primary);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.blog-post-title a:hover {
+  color: var(--accent-primary);
+}
+
+.blog-post-section {
+  margin: 1.5rem 0;
+  padding: 1.5rem;
+  background: rgba(0, 212, 255, 0.05);
+  border-left: 4px solid var(--accent-primary);
+  border-radius: 0.5rem;
+}
+
+.blog-post-section.compact {
+  padding: 1rem;
+  margin: 1rem 0;
+}
+
+.blog-post-section h4 {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--accent-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 0.8rem;
+}
+
+.blog-post-section p {
+  color: var(--text-primary);
+  line-height: 1.7;
+  margin: 0;
+}
+
+.ai-commentary {
+  font-style: italic;
+  color: var(--text-primary);
+}
+
+.ai-predictions {
+  color: var(--text-primary);
+}
+
+.blog-post-excerpt {
+  color: var(--text-secondary);
+  font-size: 1rem;
+  line-height: 1.6;
+  margin: 1rem 0;
+}
+
+.blog-post-footer {
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border-color);
+}
+
+.read-more-btn {
+  display: inline-block;
+  background: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 100%);
+  color: white;
+  padding: 0.8rem 1.5rem;
+  border-radius: 0.5rem;
+  text-decoration: none;
+  font-weight: 600;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.read-more-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 212, 255, 0.4);
+}
+
+.read-more-link {
+  color: var(--accent-primary);
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.2s;
+}
+
+.read-more-link:hover {
+  color: var(--accent-secondary);
+  text-decoration: underline;
+}
+
+.blog-archive {
+  margin-top: 3rem;
+}
+
+.archive-title {
+  font-size: 1.5rem;
+  color: var(--text-primary);
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.blog-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 1.5rem;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   .header-content h1 {
@@ -564,5 +780,17 @@ body {
 
   .stats-container {
     grid-template-columns: 1fr;
+  }
+
+  .blog-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .blog-post-card.featured .blog-post-title {
+    font-size: 1.6rem;
+  }
+
+  .blog-post-title {
+    font-size: 1.4rem;
   }
 }
