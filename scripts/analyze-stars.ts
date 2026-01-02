@@ -31,7 +31,7 @@ interface AnalyzedStar {
 }
 
 const GITHUB_USER = 'saztd';
-const DATA_FILE = path.join(__dirname, '../data/stars-analyzed.json');
+const DATA_FILE = path.join(__dirname, '../public/data/stars-analyzed.json');
 const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
 const ANTHROPIC_API_KEY = process.env.ANTHROPIC_API_KEY;
 
@@ -136,6 +136,8 @@ async function loadAnalyzedStars(): Promise<AnalyzedStar[]> {
 }
 
 async function saveAnalyzedStars(stars: AnalyzedStar[]): Promise<void> {
+  const dir = path.dirname(DATA_FILE);
+  await fs.mkdir(dir, { recursive: true });
   await fs.writeFile(DATA_FILE, JSON.stringify(stars, null, 2), 'utf-8');
 }
 

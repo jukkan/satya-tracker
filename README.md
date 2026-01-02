@@ -36,8 +36,9 @@ satya-tracker/
 │   └── deploy.yml             # Deploy to GitHub Pages
 ├── scripts/
 │   └── analyze-stars.ts       # Fetch stars + generate AI commentary
-├── data/
-│   └── stars-analyzed.json    # Cached stars with AI commentary
+├── public/
+│   └── data/
+│       └── stars-analyzed.json    # Cached stars with AI commentary
 ├── src/
 │   ├── App.tsx                # Main React component
 │   ├── App.css                # Santa Tracker styling
@@ -110,7 +111,7 @@ const response = await fetch('/your-repo-name/data/stars-analyzed.json');
 The first time the workflow runs, it will:
 1. Fetch all current stars from @saztd
 2. Generate AI commentary for each one
-3. Save to `data/stars-analyzed.json`
+3. Save to `public/data/stars-analyzed.json`
 4. Trigger a deployment
 
 You can manually trigger this by:
@@ -139,7 +140,7 @@ npm run analyze-stars
 
 1. **GitHub Actions Cron**: Every 6 hours, `fetch-stars.yml` workflow runs
 2. **Fetch Stars**: Script calls GitHub API to get current starred repos
-3. **Identify New Stars**: Compares with cached `data/stars-analyzed.json`
+3. **Identify New Stars**: Compares with cached `public/data/stars-analyzed.json`
 4. **Generate AI Commentary**: For each new star, calls Anthropic API with:
    - Repo name and description
    - Topics and language
@@ -221,7 +222,7 @@ All styles are in `src/App.css`. Key CSS variables:
 
 ## 📊 Data Format
 
-`data/stars-analyzed.json` structure:
+`public/data/stars-analyzed.json` structure:
 
 ```json
 [
@@ -244,7 +245,7 @@ All styles are in `src/App.css`. Key CSS variables:
 
 ### No stars showing up?
 
-- Check that `data/stars-analyzed.json` has content
+- Check that `public/data/stars-analyzed.json` has content
 - Verify GitHub Actions workflow ran successfully
 - Check Actions logs for errors
 
